@@ -78,4 +78,70 @@ function addEmployees() {
     employee.startDate = new Date(startDateYear, startDateMonth - 1, startDateDay);
     employee.isActive = getInput("Employee Is Active (yes or no): ", isBooleanInputValid, i => (i === "yes") );
 
+  // Output Employee JSON
+    const json = JSON.stringify(employee, null, 2);
+    console.log(`Employee: ${json}`);
+}
+
+// Search for employees by id
+function searchById() { 
+  const id = getInput("Employee ID: ", null, Number);
+  const result = employees.find(e => e.id === id);
+  if (result) { 
+     console.log("");
+     logEmployee(result);
+  } else { 
+    console.log("No Result...");
+  }
+}
+
+// Search by name 
+function searchById() { 
+ const firstNamesearch = getinput("First Name: ").toLowerCase(); 
+ const lastNamesearch = getinput("Last Name: ").toLowerCase(); 
+ const results = employees.filter(e => {
+   if (firstNamesearch && !e.firstName.tolowercaswe().includes(firstNamesearch)) { 
+    return false;
+   }
+   if (lastNamesearch && !e.lastName.tolowercaswe().include(lastNamesearch)){
+    return false;
+   }
+    return true; 
+  });
+  results.forEach((e, idx) => { 
+    console.log("");
+    console.log(`Search result ${idx + 1}--------------------------------------------`);
+    logEmployee(e);
+  });
+}
+
+
+// Application execution ---------------------
+
+// Get the command the user wants to execute
+const command = process.argv[2].toLowerCase();
+
+switch (command) {
+
+  case "list":
+    listEmployees();
+    break;
+
+  case "add":
+    addEmployees();
+    break;
+
+    case "search-by-id":
+      searchById();
+      break;
+
+      case "search-by-name":
+        serchByName();
+        break;
+
+  default:
+    console.log("Unsupported command. Exiting...");
+    process.exit(1);
+}
+
     
